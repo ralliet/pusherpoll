@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
+
+const Vote = require("../models/Vote");
 
 const Pusher = require('pusher');
 
@@ -16,11 +19,22 @@ router.get('/',(req,res) => {
 });
 
 router.post('/',(req,res) => {
-    pusher.trigger('os-poll', 'os-vote', {
+    const newVote = {
         points: 1,
-        os: req.body.os
+        os: req.body.os        
+    }
+
+    new Vote(newVote).save().then(vote => {
+        pusher.trigger('os-poll', 'os-vote', {
+            points: parseInt(vote.points),
+            os: vote.os
+        });
+    })
+    .catch((error) => {
+        return res.status(404).json({success:false, message: 'Something went wrong in the voting process, please try again'})
+        console.log(error);
     });
-    return res.status(200).json({success:true, message: 'Thank you for voting'});
+    return res.status(200).json({success:true, message: 'Voting was succesful'})   
 })
 
 
