@@ -31,8 +31,6 @@ fetch('http://localhost:3000/poll')
             (acc, vote) => (
                 (acc[vote.os] = (acc[vote.os] || 0) + parseInt(vote.points)), acc),{});
 
-        console.log(voteCounts);
-
         let dataPoints = [
             {
                 label: 'windows',
@@ -57,7 +55,7 @@ fetch('http://localhost:3000/poll')
                 theme: "light1", // "light2", "dark1", "dark2"
                 animationEnabled: true, // change to true
                 title: {
-                    text: "Basic Column Chart"
+                    text: `Total amount of votes ${totalVotes}`
                 },
                 data: [
                     {
