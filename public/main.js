@@ -21,6 +21,20 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
 });
 
+
+fetch('http://localhost:3000/poll')
+    .then(res => res.json())
+    .then(data => {
+        const votes = data.votes;
+        const totalVotes = votes.length;
+        // Count vote points for each 
+        votes.reduce((prev,curr) => {
+            
+        })
+    
+    })
+    .catch(err => console.log(err));
+
 let dataPoints = [
     {
         label: 'windows',

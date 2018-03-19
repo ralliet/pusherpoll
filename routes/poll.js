@@ -15,7 +15,8 @@ var pusher = new Pusher({
 });
 
 router.get('/',(req,res) => {
-    res.send('POLL');
+    Vote.find().then((votes) => res.json({succes:true,Votes:votes}))
+               .catch((error) => console.log(error));
 });
 
 router.post('/',(req,res) => {
@@ -29,12 +30,11 @@ router.post('/',(req,res) => {
             points: parseInt(vote.points),
             os: vote.os
         });
+        return res.status(200).json({success:true, message: 'Voting was succesful'})   
     })
     .catch((error) => {
-        return res.status(404).json({success:false, message: 'Something went wrong in the voting process, please try again'})
         console.log(error);
     });
-    return res.status(200).json({success:true, message: 'Voting was succesful'})   
 })
 
 
