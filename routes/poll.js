@@ -20,8 +20,7 @@ router.post('/',(req,res) => {
         points: 1,
         os: req.body.os
     });
-
-    return res.json({success:true, message: 'Thank you for voting'});
+    return res.status(200).json({success:true, message: 'Thank you for voting'});
 })
 
 
